@@ -23,18 +23,20 @@ Little about it:
 ==
 Potatoes
 
-<del>demo
+<del>demo</del>
 ==
 Not yet available
 
-blogpost
+<del>blogpost</del>
 ==
 Not yet available
 
-license
+<del>license</del>
 ==
 Not yet available
 
 credits
 ==
-Not yet available</del>
+Credits for some of the tiles and the character go to Klex1992 on rpgmakervx.net<br />
+Big thanks to R3ality for brainstorming with me and helping with finding ideas and solutions to some problems I ran into.<br />
+Also thanks to David Bau for providing the javascript Math.random() seeding script.<br />
