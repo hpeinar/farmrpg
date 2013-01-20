@@ -1,0 +1,23 @@
+/* body */
+body {
+	background-color: #CCC;
+}
+	
+/* background canvas */
+#backgroundCanvas {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 0;
+	margin:5px;
+	border:1px solid #AAA;
+}
+/* mainCanvas */
+#mainCanvas {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	margin:5px;
+	border:1px solid #AAA;
+}
