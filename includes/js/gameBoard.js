@@ -12,6 +12,7 @@ function gameBoard() {
 	this.player = null;
 	this.canvas = null;
 	this.backgroundCanvas = null;
+	this.uiCanvas = null;
 	this.panel = null;
 	this.lastKeysDown = null;
 	this.camera = null;
@@ -54,16 +55,25 @@ function gameBoard() {
 		this.backgroundCanvas.attr('width', config.canvasWidth);
 		this.backgroundCanvas.attr('height', config.canvasHeight);
 	};
+
+	this.UICanvasInit = function() {
+		this.uiCanvas.attr('width', config.canvasWidth);
+		this.uiCanvas.attr('height', config.canvasHeight);
+	};
 	this.init = function(cb) {
 		// select the game board, put it into the right size
 		this.canvas = $('#mainCanvas');
 		this.backgroundCanvas = $('#backgroundCanvas');
+		this.uiCanvas = $('#uiCanvas');
 
 		// init backgroundCanvas
 		this.backgroundCanvasInit();
 
+		// init uiCanvas
+		this.UICanvasInit();
+
 		// init camera
-		this.camera = new camera(0, 0 + config.panelHeight, config.canvasWidth, config.canvasHeight);
+		this.camera = new camera(0, 0, config.canvasWidth, config.canvasHeight);
 
 		// to not use width() or height() methods here, it'll screw the canvas up
 		this.canvas.attr('width', config.canvasWidth);
@@ -80,6 +90,7 @@ function gameBoard() {
 
 		// generate map
 		//var tile = new tile();
+		var axeSpawned = false;
 
 		for(var i = 0;i < this.xTiles;i++) {
 
@@ -87,7 +98,7 @@ function gameBoard() {
 
 				var newTile = new tile();
 				newTile.X = i * config.tileSize;
-				newTile.Y = e * config.tileSize + config.panelHeight;
+				newTile.Y = e * config.tileSize;
 				newTile.identifier = i + (e*i);
 				newTile.sprite = 'GRASS';
 
@@ -103,46 +114,36 @@ function gameBoard() {
 					// paint walls
 					newTile.isBorder = true;
 					newTile.isWalkable = false;
-					newTile.sprite = 'WALL';
+					newTile.sprite = 'TREE_UNBREAKABLE';
+					this.tiles.push(newTile);
 				} else if(random == 5) {
 					// some random walls
 					newTile.isWalkable = false;
 					newTile.isDestructable = true;
 					newTile.sprite = 'TREE';
 
+					this.tiles.push(newTile);
 
-					var itemRandom = Math.floor(Math.random() * 6);
-					if(itemRandom == 3) {
-						// some walls have items inside them
-						var newItem = new item();
-						newItem.X = newTile.X;
-						newItem.Y = newTile.Y;
-						newItem.type = 1;
-						newItem.name = 'Bomb count';
-						newItem.sprite = 'BOMB_BONUS';
+				} else if(random == 7 && !axeSpawned) {
+					//spawn an axe
+					// some walls have items inside them
+					var newItem = new item();
+					newTile.isWalkable = true;
+					newItem.X = newTile.X;
+					newItem.Y = newTile.Y;
+					newItem.type = 10;
+					newItem.name = 'Axe';
+					newItem.sprite = 'AXE';
+					newItem.animation = false;
 
-						newTile.hasItem = true;
-						newTile.item = newItem;
-					} else if(itemRandom == 4){
+					newTile.hasItem = true;
+					newTile.item = newItem;
+					this.tiles.push(newTile);
 
-						// this adds to player bomb radius
-						var newItem = new item();
-						newItem.X = newTile.X;
-						newItem.Y = newTile.Y;
-						newItem.type = 2;
-						newItem.name = 'Bomb radius';
-						newItem.sprite = 'RADIUS_BONUS';
-
-						newTile.hasItem = true;
-						newTile.item = newItem;
-					}
+					axeSpawned = true;
 				}
-				this.tiles.push(newTile);
-
 			}
 		}
-
-		console.log(roughSizeOfObject(newTile));
 
 		function roughSizeOfObject( object ) {
 
@@ -229,7 +230,7 @@ function gameBoard() {
 			}
 		}
 
-		if(!this.isMoving) {
+		if(!this.isMoving && this.player.isWorking != true) {
 			this.moveX = 0;
 			this.moveY = 0;
 		
@@ -240,18 +241,22 @@ function gameBoard() {
 					// shift combinations
 					if(keyDownCode == 539) {
 						this.player.sprite = "PLAYER_RIGHT";
+						this.keyQueue.splice(this.keyQueue.indexOf(539), 1);
 					}
 
 					if(keyDownCode == 538) {
 						this.player.sprite = "PLAYER_UP";
+						this.keyQueue.splice(this.keyQueue.indexOf(538), 1);
 					}
 
 					if(keyDownCode == 537) {
 						this.player.sprite = "PLAYER_LEFT";
+						this.keyQueue.splice(this.keyQueue.indexOf(537), 1);
 					}
 
 					if(keyDownCode == 540) {
 						this.player.sprite = "PLAYER_DOWN";
+						this.keyQueue.splice(this.keyQueue.indexOf(540), 1);
 					}
 
 					if(!this.isMoving) {
@@ -299,13 +304,93 @@ function gameBoard() {
 					}
 
 
-					if(keyDownCode == 32) { }
+					if(keyDownCode == 32) { 
+						// get the tile next to the player
+						console.log(this.player.X + config.tileSize, this.player.Y);
+
+						var board = this;
+
+						// check if player has axe equipped
+						console.log(this.player);
+						if(this.player.equippedItem && this.player.equippedItem.type == 10) {
+
+							var checkX;
+							var checkY;
+
+							if(board.player.sprite == "PLAYER_DOWN") {
+								checkX = this.player.X;
+								checkY = this.player.Y + config.tileSize;
+							}
+							if(board.player.sprite == "PLAYER_UP") {
+								checkX = this.player.X;
+								checkY = this.player.Y - config.tileSize;
+							}
+							if(board.player.sprite == "PLAYER_LEFT") {
+								checkX = this.player.X - config.tileSize;
+								checkY = this.player.Y;
+							}
+							if(board.player.sprite == "PLAYER_RIGHT") {
+								checkX = this.player.X + config.tileSize;
+								checkY = this.player.Y;
+							}
+
+							this.getTile(this, checkX, checkY, function(tile) {
+
+								console.log("Tile:"+ tile);
+								
+								if(tile && tile.sprite == 'TREE') {
+									var newItem = new item();
+									newItem.X = tile.X;
+									newItem.Y = tile.Y;
+									newItem.type = 10;
+									newItem.name = 'Axe';
+									newItem.sprite = 'AXE';
+									newItem.animation = true;
+
+									tile.hasItem = true;
+									tile.item = newItem;
+									tile.drawItem = true;
+
+									board.player.isWorking = true;
+
+									setTimeout(function() { 
+										board.player.isWorking = false; 
+
+										var newItem = new item();
+										newItem.X = tile.X;
+										newItem.Y = tile.Y;
+										newItem.type = 11;
+										newItem.name = 'Closed chest';
+										newItem.sprite = 'CHEST_CLOSED';
+										newItem.animation = false;
+
+										tile.hasItem = true;
+										tile.item = newItem;
+										tile.drawItem = false;
+										tile.isWalkable = true;
+										tile.sprite = 'GRASS';
+
+									}, 3000);
+								} 
+							
+
+							});
+						} else {
+							var floater = new floatingText();
+							floater.text = 'Missing a tree or an axe';
+							floater.X = this.player.X - this.camera.X;
+							floater.Y = this.player.Y- this.camera.Y;
+							this.floatingTexts.push(floater);
+						}
+
+						this.keyQueue.splice(this.keyQueue.indexOf(32), 1);
+					}
 
 						
 
 					// flush keyQueue
 					//board.keyQueue.splice(board.keyQueue.indexOf(32), 1);
-					this.keyQueue = new Array();
+					//this.keyQueue = new Array();
 						
 			}
 
@@ -344,7 +429,7 @@ function gameBoard() {
 		this.canvas.clearCanvas();
 
 		// panel
-		this.panel.draw(this);
+		//this.panel.draw(this);
 
 		// tiles
 		for(var tile in this.tiles) {

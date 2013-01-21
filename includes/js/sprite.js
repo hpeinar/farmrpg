@@ -6,27 +6,25 @@ http://projekt406.ee/codeblog
 
 // predefined sprites, NAME = [yRow, xPos]
 var sprites = {};
-sprites['BOMB'] = [1, 1];
-sprites['BOMB_1'] = [1, 2];
-sprites['BOMB_2'] = [1, 3];
-sprites['BOMB_BONUS'] = [1, 4];
-sprites['RADIUS_BONUS'] = [1, 5];
-sprites['FIRE'] = [1, 6];
-sprites['GRASS'] = [1, 7];
-sprites['PLAYER_DOWN'] = [1, 8];
-sprites['PLAYER_LEFT'] = [1, 9];
-sprites['PLAYER_RIGHT'] = [1, 10];
 
-sprites['PLAYER_UP'] = [2, 1];
-sprites['WALL'] =  [2, 2];
-sprites['BREAKABLE_WALL'] = [2, 3];
-sprites['TREE'] = [2, 4];
+sprites['GRASS'] = [1, 1];
+sprites['TREE_UNBREAKABLE'] =  [1, 2];
+sprites['TREE'] = [1, 3];
+
+sprites['PLAYER_DOWN'] = [3, 1];
+sprites['PLAYER_LEFT'] = [3, 2];
+sprites['PLAYER_RIGHT'] = [3, 3];
+sprites['PLAYER_UP'] = [3, 4];
+
+// items
+sprites['AXE'] = [2, 1];
+sprites['CHEST_CLOSED'] = [2, 2];
 
 function sprite() {
 	this.sheet = 'includes/images/'+ config.spriteSheet;
 	this.tileSize = config.tileSize;
 	// draws an sprite to given location
-	this.draw = function(spriteName, board, canvas, drawX, drawY) {
+	this.draw = function(spriteName, board, canvas, drawX, drawY, rotation) {
 		// see if the sprite fits into camera view
 		if(drawX < board.camera.X || drawX > board.camera.X + board.camera.width) {
 			return;
@@ -36,8 +34,12 @@ function sprite() {
 			return;
 		}
 
+		if(!rotation) {
+			rotation = 0;
+		}
+
 		drawX -= board.camera.X;
-		drawY -= board.camera.Y - config.panelHeight;
+		drawY -= board.camera.Y;
 
 		// get sprite
 		if(spriteName in sprites) {
@@ -51,6 +53,8 @@ function sprite() {
 
 				x: drawX,
 				y: drawY,
+
+				rotate: rotation,
 
 				sWidth: config.tileSize,
 				sHeight: config.tileSize,

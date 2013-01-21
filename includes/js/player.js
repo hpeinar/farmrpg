@@ -5,22 +5,26 @@ http://projekt406.ee/codeblog
 */
 
 function player() {
-	this.X = 20;
-	this.Y = 20 + config.panelHeight;
-	this.speed = 20;
+	this.X = config.tileSize;
+	this.Y = config.tileSize;
+	this.speed = config.tileSize;
 	this.bombs = 5; // how many bombs can be places at the same time
 	this.bombRadius = 2;
 	this.tilesOn = new Array();
+	this.tileInfront = null;
 	this.deaths = 0;
 	this.score = 0;
 	this.sprite = 'PLAYER_DOWN';
+	this.inventory = new Array();
+	this.equippedItem = null;
+	this.isWorking = false;
 	this.draw = function(board, canvas) {
 		var s = new sprite();
 		s.draw(this.sprite, board, canvas, this.X, this.Y);
 	};
 	this.randomSpawn = function(board) {
-		var xMax = 20 - 2; // minus wall tiles
-		var yMax = 20 - 2;
+		var xMax = config.tileSize - 2; // minus wall tiles
+		var yMax = config.tileSize - 2;
 
 		var xStart = 1;
 		var yStart = 1;
@@ -30,7 +34,7 @@ function player() {
 		var yRand = Math.floor(Math.random() * (yMax)) + yStart;
 
 		this.X = xRand * config.tileSize;
-		this.Y = yRand * config.tileSize + config.panelHeight;
+		this.Y = yRand * config.tileSize;
 	};
 	this.die = function(board) {
 		var floater = new floatingText();
@@ -40,7 +44,7 @@ function player() {
 		floater.Y = this.Y - 10;
 		board.floatingTexts.push(floater);
 		board.camera.X = 0;
-		board.camera.Y = 0 + config.panelHeight;
+		board.camera.Y = 0;
 		this.randomSpawn(board);
 
 		this.deaths++;
@@ -125,7 +129,7 @@ function player() {
 							var floater = new floatingText();
 							floater.text = '+1 bomb';
 							floater.X = currentTile.X - board.camera.X;
-							floater.Y = currentTile.Y - board.camera.Y + config.panelHeight;
+							floater.Y = currentTile.Y - board.camera.Y;
 							board.floatingTexts.push(floater);
 
 							board.player.bombs++;
@@ -133,10 +137,18 @@ function player() {
 							var floater = new floatingText();
 							floater.text = '+1 radius';
 							floater.X = currentTile.X - board.camera.X;
-							floater.Y = currentTile.Y - board.camera.Y + config.panelHeight;
+							floater.Y = currentTile.Y - board.camera.Y;
 							board.floatingTexts.push(floater);
 
 							board.player.bombRadius++;
+						} else if(currentTile.item.type == 10) {
+							var floater = new floatingText();
+							floater.text = 'Axe';
+							floater.X = currentTile.X - board.camera.X;
+							floater.Y = currentTile.Y - board.camera.Y;
+							board.floatingTexts.push(floater);
+
+							board.player.equippedItem = currentTile.item;
 						}
 
 						currentTile.item = null;

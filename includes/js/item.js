@@ -11,8 +11,16 @@ function item() {
 	this.type = 0; // item type for use inside the system
 	this.name = ''; // name for reference
 	this.sprite = null;
+
+	this.rotation = 0;
+	this.animation = false;
+	this.animationSpeed = 2;
 	this.draw = function(board, canvas) {
+
+		if(this.animation == true) {
+			this.rotation += this.animationSpeed;
+		}
 		var s = new sprite();
-		s.draw(this.sprite, board, canvas, this.X, this.Y);
+		s.draw(this.sprite, board, canvas, this.X, this.Y, this.rotation);
 	}
 }

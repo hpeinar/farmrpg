@@ -20,7 +20,7 @@ function camera(x, y, width, height) {
 			this.X += moveX;
 		}
 
-		if(this.Y + moveY - config.panelHeight >= 0 && (this.Y + moveY + this.height - config.panelHeight) <= (board.yTiles * config.tileSize + config.panelHeight)) {
+		if(this.Y + moveY >= 0 && (this.Y + moveY + this.height) <= (board.yTiles * config.tileSize)) {
 			this.Y += moveY;
 		}
 	}

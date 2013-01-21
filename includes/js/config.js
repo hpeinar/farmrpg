@@ -7,12 +7,9 @@ http://projekt406.ee/codeblog
 var config = {
 	debug: true,
 
-	canvasWidth: 400,
-	canvasHeight: 420,
+	canvasWidth: 800,
+	canvasHeight: 800,
 
-	panelWidth: 400,
-	panelHeight: 20,
-
-	tileSize: 20,
+	tileSize: 40,
 	spriteSheet: "spritesheet.png"
 }

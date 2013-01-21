@@ -10,6 +10,7 @@ function tile() {
 	this.Y = 1;
 	this.sprite = null;
 	this.isWalkable = true;
+	this.drawItem = false; // used on non-walkable tiles to draw items
 	this.isDestructable = false;
 	this.isBorder = false;
 	this.isDeadly = false;
@@ -32,7 +33,7 @@ function tile() {
 		}
 		
 		// draw the item if it's seeable
-		if(this.hasItem == true && this.isWalkable == true) {
+		if((this.hasItem == true && this.isWalkable == true) || this.drawItem == true) {
 			this.item.draw(board, canvas);
 		}
 		//context.fillStyle = "#999999":

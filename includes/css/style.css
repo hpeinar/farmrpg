@@ -21,3 +21,13 @@ body {
 	margin:5px;
 	border:1px solid #AAA;
 }
+
+/* UIcanvas */
+#uiCanvas {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	margin:5px;
+	border:1px solid #AAA;
+}
