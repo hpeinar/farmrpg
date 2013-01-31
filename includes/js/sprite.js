@@ -24,7 +24,7 @@ function sprite() {
 	this.sheet = 'includes/images/'+ config.spriteSheet;
 	this.tileSize = config.tileSize;
 	// draws an sprite to given location
-	this.draw = function(spriteName, board, canvas, drawX, drawY, rotation) {
+	this.draw = function(spriteName, board, canvas, drawX, drawY, rotation, opacity) {
 		// see if the sprite fits into camera view
 		if(drawX < board.camera.X || drawX > board.camera.X + board.camera.width) {
 			return;
@@ -36,6 +36,10 @@ function sprite() {
 
 		if(!rotation) {
 			rotation = 0;
+		}
+
+		if(!opacity) {
+			opacity = 1;
 		}
 
 		drawX -= board.camera.X;
@@ -65,6 +69,19 @@ function sprite() {
 				fromCenter: false,
 				cropFromCenter: false
 			})
+		} else if(spriteName == 'lighting') { 
+			canvas.drawRect({
+				x: drawX,
+				y: drawY,
+				fillStyle: '#000',
+
+				width: config.tileSize,
+				height: config.tileSize,
+
+				opacity: opacity,
+
+				fromCenter: false
+			});
 		} else {
 			canvas.drawRect({
 				x: drawX, 

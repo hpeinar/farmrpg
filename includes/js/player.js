@@ -23,8 +23,8 @@ function player() {
 		s.draw(this.sprite, board, canvas, this.X, this.Y);
 	};
 	this.randomSpawn = function(board) {
-		var xMax = config.tileSize - 2; // minus wall tiles
-		var yMax = config.tileSize - 2;
+		var xMax = 19; // minus wall tiles
+		var yMax = 19;
 
 		var xStart = 1;
 		var yStart = 1;

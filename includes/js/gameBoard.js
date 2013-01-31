@@ -13,7 +13,6 @@ function gameBoard() {
 	this.canvas = null;
 	this.backgroundCanvas = null;
 	this.uiCanvas = null;
-	this.panel = null;
 	this.lastKeysDown = null;
 	this.camera = null;
 
@@ -141,6 +140,8 @@ function gameBoard() {
 					this.tiles.push(newTile);
 
 					axeSpawned = true;
+				} else {
+					this.tiles.push(newTile);
 				}
 			}
 		}
@@ -185,9 +186,6 @@ function gameBoard() {
 		this.player = newPlayer;
 		this.player.randomSpawn(this);
 		
-		var infoPanel = new panel();
-		this.panel = infoPanel;
-
 		console.log(this.canvas.getLayers());
 
 		cb();
@@ -428,9 +426,6 @@ function gameBoard() {
 		// clear canvas
 		this.canvas.clearCanvas();
 
-		// panel
-		//this.panel.draw(this);
-
 		// tiles
 		for(var tile in this.tiles) {
 			this.tiles[tile].draw(this, this.canvas);
@@ -447,6 +442,12 @@ function gameBoard() {
 		// floating texts
 		for(var floatingText in this.floatingTexts) {
 			this.floatingTexts[floatingText].draw(this, this.canvas);
+		}
+
+		// lighting
+		//console.log("Tiles total: "+ this.tiles.length);
+		for(var tile in this.tiles) {
+			this.tiles[tile].drawLighting(this, this.canvas);
 		}
 
 		var end = new Date().getTime();

@@ -34,7 +34,7 @@ $(document).ready(function() {
 		// allowed keys (those actually do something in the game)
 		var allowed = new Array(32, 37, 38, 39, 40);
 		if(game.keyQueue.indexOf(e.keyCode) == -1 && allowed.indexOf(e.keyCode) != -1 && !shiftDown) {
-			game.keyQueue.push(e.keyCode);
+			game.keyQueue.unshift(e.keyCode);
 		}
 	})
 

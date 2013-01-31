@@ -39,4 +39,8 @@ function tile() {
 		//context.fillStyle = "#999999":
 		//context.fillRect(X, Y, config.tileSize, config.tileSize);
 	};
+	this.drawLighting = function(board, canvas) {
+		var s = new sprite();
+		s.draw('lighting', board, canvas, this.X, this.Y, null, 0.001);
+	}
 }
