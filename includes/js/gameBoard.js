@@ -95,7 +95,7 @@ function gameBoard() {
 
 			for(var e = 0;e < this.yTiles;e++) {
 
-				var newTile = new tile();
+				var newTile = new Tile();
 				newTile.X = i * config.tileSize;
 				newTile.Y = e * config.tileSize;
 				newTile.identifier = i + (e*i);
@@ -126,7 +126,7 @@ function gameBoard() {
 				} else if(random == 7 && !axeSpawned) {
 					//spawn an axe
 					// some walls have items inside them
-					var newItem = new item();
+					var newItem = new Item();
 					newTile.isWalkable = true;
 					newItem.X = newTile.X;
 					newItem.Y = newTile.Y;
@@ -337,7 +337,7 @@ function gameBoard() {
 								console.log("Tile:"+ tile);
 								
 								if(tile && tile.sprite == 'TREE') {
-									var newItem = new item();
+									var newItem = new Item();
 									newItem.X = tile.X;
 									newItem.Y = tile.Y;
 									newItem.type = 10;
@@ -354,7 +354,7 @@ function gameBoard() {
 									setTimeout(function() { 
 										board.player.isWorking = false; 
 
-										var newItem = new item();
+										var newItem = new Item();
 										newItem.X = tile.X;
 										newItem.Y = tile.Y;
 										newItem.type = 11;

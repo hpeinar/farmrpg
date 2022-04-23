@@ -4,20 +4,25 @@ http://projekt406.ee/codeblog
 17.12.2012
 */
 
-function item() {
-	this.X = 0;
-	this.Y = 0;
-	this.color = '#3a9dc2';
-	this.type = 0; // item type for use inside the system
-	this.name = ''; // name for reference
-	this.sprite = null;
+const ITEM_HOE = 11;
 
-	this.rotation = 0;
-	this.animation = false;
-	this.animationSpeed = 2;
-	this.draw = function(board, canvas) {
+class Item {
+	constructor()
+	{
+		this.X = 0;
+		this.Y = 0;
+		this.color = '#3a9dc2';
+		this.type = 0; // item type for use inside the system
+		this.name = ''; // name for reference
+		this.sprite = null;
 
-		if(this.animation == true) {
+		this.rotation = 0;
+		this.animation = false;
+		this.animationSpeed = 2;
+	}
+	draw(board, canvas) {
+
+		if(this.animation) {
 			this.rotation += this.animationSpeed;
 		}
 		var s = new sprite();
