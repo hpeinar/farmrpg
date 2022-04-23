@@ -124,7 +124,6 @@ function player() {
 
 					if(move == true && currentTile.isWalkable == true && currentTile.hasItem) {
 
-						this.pickup(currentTile, board);
 						// tile has an item, collect it
 						if(currentTile.item.type == 1) {
 							board.player.bombs++;
@@ -133,6 +132,7 @@ function player() {
 						} else if(currentTile.item.type == 10) {
 							board.player.equippedItem = currentTile.item;
 						}
+						this.pickup(currentTile, board);
 
 						currentTile.item = null;
 						currentTile.hasItem = null;
@@ -159,6 +159,14 @@ function player() {
 		currentTile.hasItem = false;
 	}
 
+	this.has_item = function (itemType) {
+		for(const item in this.inventory) {
+			if(item.type === itemType)
+				return true;
+		}
+		return false;
+	}
+
 	this.move = function(board, xSpeed, ySpeed) {
 
 		this.canMove(board, xSpeed, ySpeed, function(xS, yS) {
@@ -180,9 +188,6 @@ function player() {
 			if(board.player.Y <= board.camera.Y + (4 * config.tileSize) && yS < 0) {
 				board.camera.move(board, 0, cameraSpeed * -1);
 			}
-
-			
-
 
 			board.player.X += xS;
 			board.player.Y += yS;
