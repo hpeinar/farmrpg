@@ -123,31 +123,14 @@ function player() {
 					}
 
 					if(move == true && currentTile.isWalkable == true && currentTile.hasItem) {
+
+						this.pickup(currentTile, board);
 						// tile has an item, collect it
 						if(currentTile.item.type == 1) {
-							// generate a floating text there
-							var floater = new floatingText();
-							floater.text = '+1 bomb';
-							floater.X = currentTile.X - board.camera.X;
-							floater.Y = currentTile.Y - board.camera.Y;
-							board.floatingTexts.push(floater);
-
 							board.player.bombs++;
 						} else if(currentTile.item.type == 2) {
-							var floater = new floatingText();
-							floater.text = '+1 radius';
-							floater.X = currentTile.X - board.camera.X;
-							floater.Y = currentTile.Y - board.camera.Y;
-							board.floatingTexts.push(floater);
-
 							board.player.bombRadius++;
 						} else if(currentTile.item.type == 10) {
-							var floater = new floatingText();
-							floater.text = 'Axe';
-							floater.X = currentTile.X - board.camera.X;
-							floater.Y = currentTile.Y - board.camera.Y;
-							board.floatingTexts.push(floater);
-
 							board.player.equippedItem = currentTile.item;
 						}
 
@@ -164,6 +147,18 @@ function player() {
 		}
 
 	}
+	this.pickup = function(currentTile, board) {
+		const floater = new floatingText();
+		floater.text = currentTile.item.name;
+		floater.X = currentTile.X - board.camera.X;
+		floater.Y = currentTile.Y - board.camera.Y;
+		board.floatingTexts.push(floater);
+
+		this.inventory.push(currentTile.item);
+		currentTile.item = null;
+		currentTile.hasItem = false;
+	}
+
 	this.move = function(board, xSpeed, ySpeed) {
 
 		this.canMove(board, xSpeed, ySpeed, function(xS, yS) {
