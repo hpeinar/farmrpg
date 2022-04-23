@@ -15,38 +15,40 @@ $(document).ready(function() {
 
 	var game = new gameBoard();
 
+	const allowed_shift_keys = [config.key_left, config.key_up, config.key_right, config.key_down];
+	const allowed_keys = [config.key_use, config.key_left, config.key_up, config.key_right, config.key_down];
+
 	// we need to queue up all the clicks we get from the client
 	$('body').keydown(function(e) {
 		// shift key
-		if(e.keyCode == 16) {
+		if(e.keyCode === config.key_shift) {
 			e.preventDefault();
 			shiftDown = true;
 		}
 
 		// shift combinations
-		var shiftAllowed = new Array(37, 38, 39, 40);
 
-		if(shiftDown && shiftAllowed.indexOf(e.keyCode) != -1) {
+		if(shiftDown && allowed_shift_keys.indexOf(e.keyCode) != -1) {
 			// we'll add 500 to make the keyCode unique
 			game.keyQueue.push(e.keyCode + 500);
 		}
 
 		// allowed keys (those actually do something in the game)
-		var allowed = new Array(32, 37, 38, 39, 40);
-		if(game.keyQueue.indexOf(e.keyCode) == -1 && allowed.indexOf(e.keyCode) != -1 && !shiftDown) {
+
+		if(game.keyQueue.indexOf(e.keyCode) == -1 && allowed_keys.indexOf(e.keyCode) != -1 && !shiftDown) {
 			game.keyQueue.unshift(e.keyCode);
 		}
 	})
 
 	$('body').keyup(function(e) {
 		// shift key
-		if(e.keyCode == 16) {
+		if(e.keyCode === config.key_shift) {
 			shiftDown = false;
 		}
 
 		if(game.keyQueue.indexOf(e.keyCode) != -1) {
 
-			if(e.keyCode != 32) {
+			if(e.keyCode !== config.key_use) {
 				game.keyQueue.splice(game.keyQueue.indexOf(e.keyCode), 1);
 			}
 		}

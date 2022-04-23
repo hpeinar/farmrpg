@@ -11,5 +11,12 @@ var config = {
 	canvasHeight: 800,
 
 	tileSize: 40,
-	spriteSheet: "spritesheet.png"
+	spriteSheet: "spritesheet.png",
+
+	key_left: 37,
+	key_up: 38,
+	key_right: 39,
+	key_down: 40,
+	key_use: 13,
+	key_shift: 16
 }
