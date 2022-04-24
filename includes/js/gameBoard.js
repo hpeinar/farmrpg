@@ -106,7 +106,7 @@ class GameBoard {
 
 				// for every tile, draw a backgroun	d grass layer
 				// draw it right here because we'll never change it
-				var s = new sprite();
+				var s = new Sprite();
 				s.draw('GRASS', this, this.backgroundCanvas, newTile.X, newTile.Y);
 
 

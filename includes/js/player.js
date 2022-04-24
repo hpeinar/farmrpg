@@ -19,7 +19,7 @@ function player() {
 	this.equippedItem = null;
 	this.isWorking = false;
 	this.draw = function(board, canvas) {
-		var s = new sprite();
+		var s = new Sprite();
 		s.draw(this.sprite, board, canvas, this.X, this.Y);
 	};
 	this.randomSpawn = function(board) {

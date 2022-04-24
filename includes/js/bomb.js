@@ -118,7 +118,7 @@ function bomb() {
 		}, 1000)
 	}
 	this.draw = function(board, canvas) {
-		var s = new sprite();
+		var s = new Sprite();
 		s.draw(this.sprite, board, canvas, this.X, this.Y);
 	}
 }
