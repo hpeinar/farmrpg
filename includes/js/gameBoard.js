@@ -4,29 +4,32 @@ http://projekt406.ee/codeblog
 17.12.2012
 */
 
-function gameBoard() {
-	this.tiles = new Array();
-	this.bombs = new Array();
-	this.keyQueue = new Array();
-	this.floatingTexts = new Array();
-	this.player = null;
-	this.canvas = null;
-	this.backgroundCanvas = null;
-	this.uiCanvas = null;
-	this.lastKeysDown = null;
-	this.camera = null;
+class GameBoard {
+	constructor()
+	{
+		this.tiles = [];
+		this.bombs = [];
+		this.keyQueue = [];
+		this.floatingTexts = [];
+		this.player = null;
+		this.canvas = null;
+		this.backgroundCanvas = null;
+		this.uiCanvas = null;
+		this.lastKeysDown = null;
+		this.camera = null;
 
-	// move timer
-	this.isMoving = false;
-	this.movingTimer = 0;
-	this.moveX = 0;
-	this.moveY = 0;
+		// move timer
+		this.isMoving = false;
+		this.movingTimer = 0;
+		this.moveX = 0;
+		this.moveY = 0;
 
-	// board options
-	this.xTiles = 60;
-	this.yTiles = 60;
+		// board options
+		this.xTiles = 60;
+		this.yTiles = 60;
+	}
 
-	this.bind = function(board, cb) {
+	bind(board, cb) {
 		board.canvas.keydown(function(e) {
 			board.keyDownCode = e.keyCode;
 		});
@@ -39,10 +42,10 @@ function gameBoard() {
 		console.log("Gameboard binding");
 		cb();
 	};
-	this.getTile = function(board, xPos, yPos, cb) {
-		var selectedTile = null;
-		for(var tile in board.tiles) {
-			var currentTile = board.tiles[tile];
+	getTile(board, xPos, yPos, cb) {
+		let selectedTile = null;
+		for(const tile in board.tiles) {
+			const currentTile = board.tiles[tile];
 			if(currentTile.X == xPos && currentTile.Y == yPos) {
 				selectedTile = currentTile;
 			}
@@ -50,16 +53,16 @@ function gameBoard() {
 
 		cb(selectedTile);
 	}
-	this.backgroundCanvasInit = function() {
+	backgroundCanvasInit () {
 		this.backgroundCanvas.attr('width', config.canvasWidth);
 		this.backgroundCanvas.attr('height', config.canvasHeight);
 	};
 
-	this.UICanvasInit = function() {
+	UICanvasInit () {
 		this.uiCanvas.attr('width', config.canvasWidth);
 		this.uiCanvas.attr('height', config.canvasHeight);
 	};
-	this.init = function(cb) {
+	init(cb) {
 		// select the game board, put it into the right size
 		this.canvas = $('#mainCanvas');
 		this.backgroundCanvas = $('#backgroundCanvas');
@@ -72,7 +75,7 @@ function gameBoard() {
 		this.UICanvasInit();
 
 		// init camera
-		this.camera = new camera(0, 0, config.canvasWidth, config.canvasHeight);
+		this.camera = new Camera(0, 0, config.canvasWidth, config.canvasHeight);
 
 		// to not use width() or height() methods here, it'll screw the canvas up
 		this.canvas.attr('width', config.canvasWidth);
@@ -103,7 +106,7 @@ function gameBoard() {
 
 				// for every tile, draw a backgroun	d grass layer
 				// draw it right here because we'll never change it
-				var s = new sprite();
+				var s = new Sprite();
 				s.draw('GRASS', this, this.backgroundCanvas, newTile.X, newTile.Y);
 
 
@@ -182,7 +185,7 @@ function gameBoard() {
 
 
 		// add player
-		var newPlayer = new player();
+		var newPlayer = new Player();
 		this.player = newPlayer;
 		this.player.randomSpawn(this);
 		
@@ -191,8 +194,8 @@ function gameBoard() {
 		cb();
 	};
 	 
-	this.update = function(cb) {
-		this.player.tilesOn = new Array();
+	update (cb) {
+		this.player.tilesOn = [];
 
 		var playerX = this.player.X;
 		var playerY = this.player.Y;
@@ -374,7 +377,7 @@ function gameBoard() {
 
 							});
 						} else {
-							var floater = new floatingText();
+							var floater = new FloatingText();
 							floater.text = 'Missing a tree or an axe';
 							floater.X = this.player.X - this.camera.X;
 							floater.Y = this.player.Y- this.camera.Y;
@@ -413,26 +416,26 @@ function gameBoard() {
 		cb();
 	};
 
-	this.selectTile = function(xPos, yPos, cb) {
+	selectTile(xPos, yPos, cb) {
 		for(var tile in this.tiles) {
 			if(this.tiles[tile].X == xPos && this.tiles[tile].Y == yPos) {
 				cb(this.tiles[tile]);
 			}
 		}
 	};
-	this.draw = function() {
+	draw() {
 
-		var start = new Date().getTime();
+		const start = new Date().getTime();
 		// clear canvas
 		this.canvas.clearCanvas();
 
 		// tiles
-		for(var tile in this.tiles) {
+		for(const tile in this.tiles) {
 			this.tiles[tile].draw(this, this.canvas);
 		}
 
 		// bombs
-		for(var bomb in this.bombs) {
+		for(const bomb in this.bombs) {
 			this.bombs[bomb].draw(this, this.canvas);
 		}
 
@@ -440,18 +443,18 @@ function gameBoard() {
 		this.player.draw(this, this.canvas);
 
 		// floating texts
-		for(var floatingText in this.floatingTexts) {
+		for(const floatingText in this.floatingTexts) {
 			this.floatingTexts[floatingText].draw(this, this.canvas);
 		}
 
 		// lighting
 		//console.log("Tiles total: "+ this.tiles.length);
-		for(var tile in this.tiles) {
+		for(const tile in this.tiles) {
 			this.tiles[tile].drawLighting(this, this.canvas);
 		}
 
-		var end = new Date().getTime();
-		var time = end - start;
+		const end = new Date().getTime();
+		const time = end - start;
 		//console.log('Execution time: ' + time);
 	};
 }

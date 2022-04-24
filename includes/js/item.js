@@ -25,7 +25,7 @@ class Item {
 		if(this.animation) {
 			this.rotation += this.animationSpeed;
 		}
-		var s = new sprite();
+		var s = new Sprite();
 		s.draw(this.sprite, board, canvas, this.X, this.Y, this.rotation);
 	}
 }

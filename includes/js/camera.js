@@ -4,13 +4,14 @@ http://projekt406.ee/codeblog
 13.01.2013
 */
 
-function camera(x, y, width, height) {
-	this.X = x;
-	this.Y = y;
-	this.width = width;
-	this.height = height;
-
-	this.move = function(board, moveX, moveY) {
+class Camera {
+	constructor (x, y, width, height) {
+		this.X = x;
+		this.Y = y;
+		this.width = width;
+		this.height = height;
+	}
+	move (board, moveX, moveY) {
 
 		// move camera tile by tile, not by some wierd amount
 		moveX *= config.tileSize / 4;

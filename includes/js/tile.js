@@ -31,7 +31,7 @@ class Tile {
 	draw(board, canvas) {
 
 		if(this.sprite != 'GRASS') {
-			var s = new sprite();
+			var s = new Sprite();
 			s.draw(this.sprite, board, canvas, this.X, this.Y);
 		}
 		
@@ -43,7 +43,7 @@ class Tile {
 		//context.fillRect(X, Y, config.tileSize, config.tileSize);
 	};
 	drawLighting(board, canvas) {
-		var s = new sprite();
+		var s = new Sprite();
 		s.draw('lighting', board, canvas, this.X, this.Y, null, 0.001);
 	}
 }

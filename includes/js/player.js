@@ -4,25 +4,27 @@ http://projekt406.ee/codeblog
 17.12.2012
 */
 
-function player() {
-	this.X = config.tileSize;
-	this.Y = config.tileSize;
-	this.speed = config.tileSize;
-	this.bombs = 5; // how many bombs can be places at the same time
-	this.bombRadius = 2;
-	this.tilesOn = new Array();
-	this.tileInfront = null;
-	this.deaths = 0;
-	this.score = 0;
-	this.sprite = 'PLAYER_DOWN';
-	this.inventory = new Array();
-	this.equippedItem = null;
-	this.isWorking = false;
-	this.draw = function(board, canvas) {
-		var s = new sprite();
+class Player {
+	constructor() {
+		this.X = config.tileSize;
+		this.Y = config.tileSize;
+		this.speed = config.tileSize;
+		this.bombs = 5; // how many bombs can be places at the same time
+		this.bombRadius = 2;
+		this.tilesOn = new Array();
+		this.tileInfront = null;
+		this.deaths = 0;
+		this.score = 0;
+		this.sprite = 'PLAYER_DOWN';
+		this.inventory = new Array();
+		this.equippedItem = null;
+		this.isWorking = false;
+	}
+	draw (board, canvas) {
+		const s = new Sprite();
 		s.draw(this.sprite, board, canvas, this.X, this.Y);
 	};
-	this.randomSpawn = function(board) {
+	randomSpawn (board) {
 		var xMax = 19; // minus wall tiles
 		var yMax = 19;
 
@@ -36,8 +38,8 @@ function player() {
 		this.X = xRand * config.tileSize;
 		this.Y = yRand * config.tileSize;
 	};
-	this.die = function(board) {
-		var floater = new floatingText();
+	die(board) {
+		const floater = new FloatingText();
 		floater.text = '+1 death';
 		floater.color = '#900';
 		floater.X = this.X - 5;
@@ -49,7 +51,7 @@ function player() {
 
 		this.deaths++;
 	};
-	this.plantBomb = function(board, cb) {
+	plantBomb (board, cb) {
 		var playerX = this.X;
 		var playerY = this.Y;
 
@@ -73,7 +75,7 @@ function player() {
 			})
 		//}
 	};
-	this.canMove = function(board, xSpeed, ySpeed, cb) {
+	canMove (board, xSpeed, ySpeed, cb) {
 		// first move player "hypothetically" and check if it would go onto a non-walkable tile, if not, really move the player
 		var playerX = this.X + xSpeed;
 		var playerY = this.Y + ySpeed;
@@ -147,8 +149,8 @@ function player() {
 		}
 
 	}
-	this.pickup = function(currentTile, board) {
-		const floater = new floatingText();
+	pickup (currentTile, board) {
+		const floater = new FloatingText();
 		floater.text = currentTile.item.name;
 		floater.X = currentTile.X - board.camera.X;
 		floater.Y = currentTile.Y - board.camera.Y;
@@ -159,7 +161,7 @@ function player() {
 		currentTile.hasItem = false;
 	}
 
-	this.has_item = function (itemType) {
+	has_item (itemType) {
 		for(const item in this.inventory) {
 			if(item.type === itemType)
 				return true;
@@ -167,7 +169,7 @@ function player() {
 		return false;
 	}
 
-	this.move = function(board, xSpeed, ySpeed) {
+	move (board, xSpeed, ySpeed) {
 
 		this.canMove(board, xSpeed, ySpeed, function(xS, yS) {
 

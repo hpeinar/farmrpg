@@ -20,11 +20,14 @@ sprites['PLAYER_UP'] = [3, 4];
 sprites['AXE'] = [2, 1];
 sprites['CHEST_CLOSED'] = [2, 2];
 
-function sprite() {
-	this.sheet = 'includes/images/'+ config.spriteSheet;
-	this.tileSize = config.tileSize;
-	// draws an sprite to given location
-	this.draw = function(spriteName, board, canvas, drawX, drawY, rotation, opacity) {
+class Sprite {
+	constructor()
+	{
+		this.sheet = 'includes/images/' + config.spriteSheet;
+		this.tileSize = config.tileSize;
+	}
+	// draws a sprite to given location
+	draw (spriteName, board, canvas, drawX, drawY, rotation, opacity) {
 		// see if the sprite fits into camera view
 		if(drawX < board.camera.X || drawX > board.camera.X + board.camera.width) {
 			return;
@@ -98,6 +101,5 @@ function sprite() {
 				fromCenter: false
 			})
 		}
-			
 	}
 }
