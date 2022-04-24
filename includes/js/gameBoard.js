@@ -75,7 +75,7 @@ class GameBoard {
 		this.UICanvasInit();
 
 		// init camera
-		this.camera = new camera(0, 0, config.canvasWidth, config.canvasHeight);
+		this.camera = new Camera(0, 0, config.canvasWidth, config.canvasHeight);
 
 		// to not use width() or height() methods here, it'll screw the canvas up
 		this.canvas.attr('width', config.canvasWidth);
