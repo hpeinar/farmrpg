@@ -95,7 +95,7 @@ function gameBoard() {
 
 			for(var e = 0;e < this.yTiles;e++) {
 
-				var newTile = new tile();
+				var newTile = new Tile();
 				newTile.X = i * config.tileSize;
 				newTile.Y = e * config.tileSize;
 				newTile.identifier = i + (e*i);
@@ -126,7 +126,7 @@ function gameBoard() {
 				} else if(random == 7 && !axeSpawned) {
 					//spawn an axe
 					// some walls have items inside them
-					var newItem = new item();
+					var newItem = new Item();
 					newTile.isWalkable = true;
 					newItem.X = newTile.X;
 					newItem.Y = newTile.Y;
@@ -237,28 +237,28 @@ function gameBoard() {
 					var keyDownCode = this.keyQueue[key];
 
 					// shift combinations
-					if(keyDownCode == 539) {
+					if(keyDownCode === (config.shiftModifier+config.keyRight)) {
 						this.player.sprite = "PLAYER_RIGHT";
-						this.keyQueue.splice(this.keyQueue.indexOf(539), 1);
+						this.keyQueue.splice(this.keyQueue.indexOf(config.shiftModifier+config.keyRight), 1);
 					}
 
-					if(keyDownCode == 538) {
+					if(keyDownCode === (config.shiftModifier+config.keyUp)) {
 						this.player.sprite = "PLAYER_UP";
-						this.keyQueue.splice(this.keyQueue.indexOf(538), 1);
+						this.keyQueue.splice(this.keyQueue.indexOf(config.shiftModifier+config.keyUp), 1);
 					}
 
-					if(keyDownCode == 537) {
+					if(keyDownCode === (config.shiftModifier+config.keyLeft)) {
 						this.player.sprite = "PLAYER_LEFT";
-						this.keyQueue.splice(this.keyQueue.indexOf(537), 1);
+						this.keyQueue.splice(this.keyQueue.indexOf(config.shiftModifier+config.keyLeft), 1);
 					}
 
-					if(keyDownCode == 540) {
+					if(keyDownCode === (config.shiftModifier+config.keyDown)) {
 						this.player.sprite = "PLAYER_DOWN";
-						this.keyQueue.splice(this.keyQueue.indexOf(540), 1);
+						this.keyQueue.splice(this.keyQueue.indexOf(config.shiftModifier+config.keyDown), 1);
 					}
 
 					if(!this.isMoving) {
-						if(keyDownCode == 39) {
+						if(keyDownCode === config.keyRight) {
 
 							this.moveX = this.player.speed;
 							this.player.sprite = "PLAYER_RIGHT";
@@ -269,7 +269,7 @@ function gameBoard() {
 					}
 
 					if(!this.isMoving) {
-						if(keyDownCode == 38) {
+						if(keyDownCode === config.keyUp) {
 
 							this.moveY = this.player.speed * -1;
 							this.player.sprite = "PLAYER_UP";
@@ -280,7 +280,7 @@ function gameBoard() {
 					}
 
 					if(!this.isMoving) {
-						if(keyDownCode == 37) {
+						if(keyDownCode === config.keyLeft) {
 
 							this.moveX = this.player.speed * -1;
 							this.player.sprite = "PLAYER_LEFT";
@@ -291,7 +291,7 @@ function gameBoard() {
 					}
 
 					if(!this.isMoving) {
-						if(keyDownCode == 40) {
+						if(keyDownCode === config.keyDown) {
 
 							this.moveY = this.player.speed;
 							this.player.sprite = "PLAYER_DOWN";
@@ -302,7 +302,7 @@ function gameBoard() {
 					}
 
 
-					if(keyDownCode == 32) { 
+					if(keyDownCode === config.keyUse) {
 						// get the tile next to the player
 						console.log(this.player.X + config.tileSize, this.player.Y);
 
@@ -337,7 +337,7 @@ function gameBoard() {
 								console.log("Tile:"+ tile);
 								
 								if(tile && tile.sprite == 'TREE') {
-									var newItem = new item();
+									var newItem = new Item();
 									newItem.X = tile.X;
 									newItem.Y = tile.Y;
 									newItem.type = 10;
@@ -354,7 +354,7 @@ function gameBoard() {
 									setTimeout(function() { 
 										board.player.isWorking = false; 
 
-										var newItem = new item();
+										var newItem = new Item();
 										newItem.X = tile.X;
 										newItem.Y = tile.Y;
 										newItem.type = 11;

@@ -1,0 +1,10 @@
+
+const KEYCODES = {
+    BACKSPACE: 8,
+    RETURN: 13,
+    SHIFT: 16,
+    ARROW_LEFT: 37,
+    ARROW_UP: 38,
+    ARROW_RIGHT: 39,
+    ARROW_DOWN: 40,
+};

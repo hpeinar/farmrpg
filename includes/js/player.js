@@ -123,33 +123,16 @@ function player() {
 					}
 
 					if(move == true && currentTile.isWalkable == true && currentTile.hasItem) {
+
 						// tile has an item, collect it
 						if(currentTile.item.type == 1) {
-							// generate a floating text there
-							var floater = new floatingText();
-							floater.text = '+1 bomb';
-							floater.X = currentTile.X - board.camera.X;
-							floater.Y = currentTile.Y - board.camera.Y;
-							board.floatingTexts.push(floater);
-
 							board.player.bombs++;
 						} else if(currentTile.item.type == 2) {
-							var floater = new floatingText();
-							floater.text = '+1 radius';
-							floater.X = currentTile.X - board.camera.X;
-							floater.Y = currentTile.Y - board.camera.Y;
-							board.floatingTexts.push(floater);
-
 							board.player.bombRadius++;
 						} else if(currentTile.item.type == 10) {
-							var floater = new floatingText();
-							floater.text = 'Axe';
-							floater.X = currentTile.X - board.camera.X;
-							floater.Y = currentTile.Y - board.camera.Y;
-							board.floatingTexts.push(floater);
-
 							board.player.equippedItem = currentTile.item;
 						}
+						this.pickup(currentTile, board);
 
 						currentTile.item = null;
 						currentTile.hasItem = null;
@@ -164,6 +147,26 @@ function player() {
 		}
 
 	}
+	this.pickup = function(currentTile, board) {
+		const floater = new floatingText();
+		floater.text = currentTile.item.name;
+		floater.X = currentTile.X - board.camera.X;
+		floater.Y = currentTile.Y - board.camera.Y;
+		board.floatingTexts.push(floater);
+
+		this.inventory.push(currentTile.item);
+		currentTile.item = null;
+		currentTile.hasItem = false;
+	}
+
+	this.has_item = function (itemType) {
+		for(const item in this.inventory) {
+			if(item.type === itemType)
+				return true;
+		}
+		return false;
+	}
+
 	this.move = function(board, xSpeed, ySpeed) {
 
 		this.canMove(board, xSpeed, ySpeed, function(xS, yS) {
@@ -185,9 +188,6 @@ function player() {
 			if(board.player.Y <= board.camera.Y + (4 * config.tileSize) && yS < 0) {
 				board.camera.move(board, 0, cameraSpeed * -1);
 			}
-
-			
-
 
 			board.player.X += xS;
 			board.player.Y += yS;
