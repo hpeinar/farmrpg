@@ -185,7 +185,7 @@ class GameBoard {
 
 
 		// add player
-		var newPlayer = new player();
+		var newPlayer = new Player();
 		this.player = newPlayer;
 		this.player.randomSpawn(this);
 		
