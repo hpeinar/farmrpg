@@ -15,13 +15,13 @@ $(document).ready(function() {
 
 	var game = new gameBoard();
 
-	const allowed_shift_keys = [config.key_left, config.key_up, config.key_right, config.key_down];
-	const allowed_keys = [config.key_use, config.key_left, config.key_up, config.key_right, config.key_down];
+	const allowed_shift_keys = [config.keyLeft, config.keyUp, config.keyRight, config.keyDown];
+	const allowed_keys = [config.keyUse, config.keyLeft, config.keyUp, config.keyRight, config.keyDown, config.key_hoe];
 
 	// we need to queue up all the clicks we get from the client
 	$('body').keydown(function(e) {
 		// shift key
-		if(e.keyCode === config.key_shift) {
+		if(e.keyCode === config.keyShift) {
 			e.preventDefault();
 			shiftDown = true;
 		}
@@ -29,8 +29,8 @@ $(document).ready(function() {
 		// shift combinations
 
 		if(shiftDown && allowed_shift_keys.indexOf(e.keyCode) != -1) {
-			// we'll add 500 to make the keyCode unique
-			game.keyQueue.push(e.keyCode + 500);
+			// we'll add config.shiftModifier to make the keyCode unique
+			game.keyQueue.push(e.keyCode + config.shiftModifier);
 		}
 
 		// allowed keys (those actually do something in the game)
@@ -42,13 +42,13 @@ $(document).ready(function() {
 
 	$('body').keyup(function(e) {
 		// shift key
-		if(e.keyCode === config.key_shift) {
+		if(e.keyCode === config.keyShift) {
 			shiftDown = false;
 		}
 
 		if(game.keyQueue.indexOf(e.keyCode) != -1) {
 
-			if(e.keyCode !== config.key_use) {
+			if(e.keyCode !== config.keyUse) {
 				game.keyQueue.splice(game.keyQueue.indexOf(e.keyCode), 1);
 			}
 		}

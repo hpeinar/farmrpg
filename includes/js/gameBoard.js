@@ -237,28 +237,28 @@ function gameBoard() {
 					var keyDownCode = this.keyQueue[key];
 
 					// shift combinations
-					if(keyDownCode === (500+config.key_right)) {
+					if(keyDownCode === (config.shiftModifier+config.keyRight)) {
 						this.player.sprite = "PLAYER_RIGHT";
-						this.keyQueue.splice(this.keyQueue.indexOf(500+config.key_right), 1);
+						this.keyQueue.splice(this.keyQueue.indexOf(config.shiftModifier+config.keyRight), 1);
 					}
 
-					if(keyDownCode === (500+config.key_up)) {
+					if(keyDownCode === (config.shiftModifier+config.keyUp)) {
 						this.player.sprite = "PLAYER_UP";
-						this.keyQueue.splice(this.keyQueue.indexOf(500+config.key_up), 1);
+						this.keyQueue.splice(this.keyQueue.indexOf(config.shiftModifier+config.keyUp), 1);
 					}
 
-					if(keyDownCode === (500+config.key_left)) {
+					if(keyDownCode === (config.shiftModifier+config.keyLeft)) {
 						this.player.sprite = "PLAYER_LEFT";
-						this.keyQueue.splice(this.keyQueue.indexOf(500+config.key_left), 1);
+						this.keyQueue.splice(this.keyQueue.indexOf(config.shiftModifier+config.keyLeft), 1);
 					}
 
-					if(keyDownCode === (500+config.key_down)) {
+					if(keyDownCode === (config.shiftModifier+config.keyDown)) {
 						this.player.sprite = "PLAYER_DOWN";
-						this.keyQueue.splice(this.keyQueue.indexOf(500+config.key_down), 1);
+						this.keyQueue.splice(this.keyQueue.indexOf(config.shiftModifier+config.keyDown), 1);
 					}
 
 					if(!this.isMoving) {
-						if(keyDownCode === config.key_right) {
+						if(keyDownCode === config.keyRight) {
 
 							this.moveX = this.player.speed;
 							this.player.sprite = "PLAYER_RIGHT";
@@ -269,7 +269,7 @@ function gameBoard() {
 					}
 
 					if(!this.isMoving) {
-						if(keyDownCode === config.key_up) {
+						if(keyDownCode === config.keyUp) {
 
 							this.moveY = this.player.speed * -1;
 							this.player.sprite = "PLAYER_UP";
@@ -280,7 +280,7 @@ function gameBoard() {
 					}
 
 					if(!this.isMoving) {
-						if(keyDownCode === config.key_left) {
+						if(keyDownCode === config.keyLeft) {
 
 							this.moveX = this.player.speed * -1;
 							this.player.sprite = "PLAYER_LEFT";
@@ -291,7 +291,7 @@ function gameBoard() {
 					}
 
 					if(!this.isMoving) {
-						if(keyDownCode === config.key_down) {
+						if(keyDownCode === config.keyDown) {
 
 							this.moveY = this.player.speed;
 							this.player.sprite = "PLAYER_DOWN";
@@ -302,7 +302,7 @@ function gameBoard() {
 					}
 
 
-					if(keyDownCode === config.key_use) {
+					if(keyDownCode === config.keyUse) {
 						// get the tile next to the player
 						console.log(this.player.X + config.tileSize, this.player.Y);
 
