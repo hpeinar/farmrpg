@@ -37,7 +37,7 @@ function player() {
 		this.Y = yRand * config.tileSize;
 	};
 	this.die = function(board) {
-		var floater = new floatingText();
+		var floater = new FloatingText();
 		floater.text = '+1 death';
 		floater.color = '#900';
 		floater.X = this.X - 5;
@@ -148,7 +148,7 @@ function player() {
 
 	}
 	this.pickup = function(currentTile, board) {
-		const floater = new floatingText();
+		const floater = new FloatingText();
 		floater.text = currentTile.item.name;
 		floater.X = currentTile.X - board.camera.X;
 		floater.Y = currentTile.Y - board.camera.Y;

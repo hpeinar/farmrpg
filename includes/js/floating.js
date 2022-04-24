@@ -5,15 +5,16 @@ http://projekt406.ee/codeblog
 */
 
 // this function is ment to create and 
-function floatingText() {
-	this.text = '';
-	this.X = 0;
-	this.Y = 0;
-	this.color = '#fff';
+class FloatingText {
+	constructor() {
+		this.text = '';
+		this.X = 0;
+		this.Y = 0;
+		this.color = '#fff';
 
-	this.opacity = 1;
-
-	this.draw = function(board, canvas) {
+		this.opacity = 1;
+	}
+	draw (board, canvas) {
 		// before drawing, move and fade the text
 
 		if(this.opacity > 0.1) {
@@ -34,7 +35,7 @@ function floatingText() {
 				opacity: this.opacity
 			});
 		} else {
-			var floatIndex = board.floatingTexts.indexOf(this);
+			const floatIndex = board.floatingTexts.indexOf(this);
 
 			if(floatIndex != -1 ) {
 				board.floatingTexts.splice(floatIndex, 1);				

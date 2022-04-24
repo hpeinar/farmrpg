@@ -377,7 +377,7 @@ class GameBoard {
 
 							});
 						} else {
-							var floater = new floatingText();
+							var floater = new FloatingText();
 							floater.text = 'Missing a tree or an axe';
 							floater.X = this.player.X - this.camera.X;
 							floater.Y = this.player.Y- this.camera.Y;
