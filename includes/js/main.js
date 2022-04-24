@@ -13,7 +13,7 @@ $(document).ready(function() {
 		$('#mainCanvas').focus();
 	})
 
-	var game = new gameBoard();
+	const game = new GameBoard();
 
 	const allowed_shift_keys = [config.keyLeft, config.keyUp, config.keyRight, config.keyDown];
 	const allowed_keys = [config.keyUse, config.keyLeft, config.keyUp, config.keyRight, config.keyDown, config.key_hoe];
